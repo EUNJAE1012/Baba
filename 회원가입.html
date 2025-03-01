@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 양식</title>
+    <link rel="stylesheet" href="/assets/css/findPassword.css" />
+    <style>
+      .form-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        width: 30%;
+        min-width: 300px;
+        margin: 0 auto;
+        margin-top: 80px;
+      }
+
+      .form-box {
+        background-color: white;
+        border: 1px solid #ddd;
+        width: 100%;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+      }
+
+      .input-row:last-child {
+        border-bottom: none;
+      }
+
+      .icon {
+        width: 24px;
+        margin-right: 10px;
+        color: #999;
+      }
+
+      .input-field {
+        border: none;
+        width: 100%;
+        font-size: 15px;
+        outline: none;
+        color: #333;
+      }
+
+      .email-info {
+        font-size: 12px;
+        color: #8e8e8e;
+      }
+
+      .birthdate-row {
+        display: flex;
+        align-items: center;
+      }
+
+      .birthdate-input {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .select-container {
+        margin: 15px 0;
+        border: 1px solid gray;
+      }
+
+      .select-container select {
+        border: none;
+        background: transparent;
+        width: 100%;
+        font-size: 14px;
+        color: #333;
+        padding: 5px 0;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .select-arrow {
+        float: right;
+      }
+
+      .tab-group {
+        display: flex;
+        margin: 15px 0;
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 12px 0;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        cursor: pointer;
+      }
+
+      .tab.active {
+        background-color: #03c75a;
+        border-color: #03c75a;
+        color: white;
+      }
+
+      .tab:first-child {
+        border-radius: 6px 0 0 6px;
+      }
+
+      .tab:last-child {
+        border-radius: 0 6px 6px 0;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        margin-top: 15px;
+      }
+
+      .checkbox-row input[type="checkbox"] {
+        margin-right: 10px;
+      }
+
+      .checkbox-text {
+        color: #333;
+        font-size: 14px;
+      }
+
+
+      .dropdown-icon {
+        margin-left: auto;
+        color: #999;
+      }
+      #submit{
+        display: block;
+        margin: 20px auto 0 auto;  /* 수평 중앙 정렬, 상단에 여백 추가 */
+        align-self: center;
+        background-color: #c8fae0;
+        width: 80px;
+        height: 40px;
+      }
+
+    </style>
+  </head>
+
+  
+  <body>
+    <header class="header">
+      <div class="logo">
+        <a href="로그인.html">
+          <img src="/assets/img/logo.png" alt="로고" />
+        </a>
+      </div>
+      
+    </header>
+
+    <div class="form-container">
+      <!-- 아이디 및 비밀번호 입력 박스 -->
+      <div class="form-box">
+        <div class="input-row">👤아이디
+          <div class="icon"> </div>
+          <input type="text" class="input-field" placeholder="아이디"/>
+
+
+        <div class="input-row">🔒 비밀번호
+          <div class="icon"></div>
+          <input type="password" class="input-field" placeholder="비밀번호" />
+        </div>
+
+        <div class="input-row">✉️이메일
+          <div class="icon"></div>
+          <input type="email-input" class="input-field" placeholder="이메일" />
+        </div>
+      </div>
+
+      <!-- 이름 및 생년월일 입력 박스 -->
+        <div class="input-row">👤이름
+          <div class="icon"></div>
+          <input type="text" class="input-field" placeholder="이름" />
+        </div>
+
+        <div class="input-row">📅생년월일
+          <div class="icon"></div>
+          <input type="date" class="input-field" placeholder="생년월일" />
+        </div>
+
+      <!-- 휴대전화 입력 박스 -->
+        <div class="input-row">📱전화번호
+          <div class="icon"></div>
+          <input type="text" class="input-field" placeholder="휴대전화번호" />
+        </div>
+      </div>
+
+      <!-- 약관 동의 체크박스 -->
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree" />
+        <label for="agree" class="checkbox-text"> <span class="green-text">[필수]</span> 인증 약관 전체동의 </label>
+        <div class="dropdown-icon">▼</div>
+      </div>
+          <!-- 제출버튼 -->
+     <button id="submit">제출</button>
+    </div>
+
+    <!-- 푸터 -->
+    <div class="footer">
+      <div class="social-icons">
+        <a href="#"><img src="/assets/img/x.png" /></a>
+        <a href="#"><img src="/assets/img/youtube.png" /></a>
+      </div>
+      <p class="copyright">© SAFFY KimEunJae_HongJeongHoon</p>
+      </div>
+    </div>
+  
+    <script>
+      document.getElementById("submit").addEventListener("click", function (event) {
+        event.preventDefault(); // 기본 제출 이벤트 방지
+        
+        let isValid = true;
+        let inputs = document.querySelectorAll(".input-field");
+        
+        // 모든 입력 필드에 대해 검증
+        inputs.forEach(input => {
+          input.style.border = ""; // 초기화
+          let errorMessage = input.nextElementSibling;
+          
+          // 기존 오류 메시지 제거 (중복 방지)
+          if (errorMessage && errorMessage.classList.contains("error-message")) {
+            errorMessage.remove();
+          }
+          
+          // 필수 입력 항목 검증
+          if (!input.value.trim()) {
+            input.style.border = "2px solid red";
+            isValid = false;
+          }
+        });
+        
+        // 이메일 형식 검증
+        let emailInput = document.querySelector("input[type='email-input']");
+        let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (emailInput && !emailPattern.test(emailInput.value)) {
+          emailInput.style.border = "2px solid #F6D9D9";
+          isValid = false;
+          
+          // 기존 오류 메시지 제거 (중복 방지)
+          let errorMessage = emailInput.nextElementSibling;
+          if (errorMessage && errorMessage.classList.contains("error-message")) {
+            errorMessage.remove();
+          }
+          
+          let error = document.createElement("div");
+          error.classList.add("error-message");
+          error.style.color = "red";
+          error.style.fontSize = "12px";
+          error.textContent = "올바른 이메일 형식을 입력하세요.";
+          emailInput.parentNode.appendChild(error);
+        }
+        
+        // 비밀번호 길이 검증
+        let passwordInput = document.querySelector("input[type='password']");
+        if (passwordInput && passwordInput.value.length < 6) {
+          passwordInput.style.border = "2px solid #F6D9D9";
+          isValid = false;
+          
+          // 기존 오류 메시지 제거 (중복 방지)
+          let errorMessage = passwordInput.nextElementSibling;
+          if (errorMessage && errorMessage.classList.contains("error-message")) {
+            errorMessage.remove();
+          }
+          
+          let error = document.createElement("div");
+          error.classList.add("error-message");
+          error.style.color = "red";
+          error.style.fontSize = "12px";
+          error.textContent = "비밀번호는 최소 6자 이상이어야 합니다.";
+          passwordInput.parentNode.appendChild(error);
+        }
+        
+        // 체크박스 동의 확인
+        let agreeCheckbox = document.getElementById("agree");
+        if (!agreeCheckbox.checked) {
+          alert("인증 약관에 동의해야 합니다.");
+          isValid = false;
+        }
+        
+        if (isValid) {
+          alert("회원가입 완료");
+          window.location.href = "로그인.html";
+        }
+      });
+    </script>
+    
+    
+  </body>
+
+</html>

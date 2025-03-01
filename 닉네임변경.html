@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>닉네임 변경</title>
+    <link rel="stylesheet" href="/assets/css/findPassword.css" />
+    <style>
+      .error {
+        border: 2px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="logo">
+        <a href="main.html">
+          <img src="/assets/img/logo.png" alt="로고" />
+        </a>
+      </div>
+      <div class="nav">
+        <a href="main.html">지역 별 관광정보</a>
+        <a href="main.html">나의 여행 계획</a>
+        <a href="마이페이지.html">마이페이지</a>
+        <a href="로그인.html" class="button">로그아웃</a>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- 닉네임 변경 폼 -->
+      <div class="content">
+        <div class="form-box">
+          <h3>새로운 닉네임</h3>
+          <input type="text" id="nickname" placeholder="새로운 닉네임" />
+          <button onclick="validateNickname()">완료</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+      <div class="social-icons">
+        <a href="https://edu.ssafy.com/edu/main/index.do"
+          ><img src="/assets/img/x.png"
+        /></a>
+        <a href="https://edu.ssafy.com/edu/main/index.do"
+          ><img src="/assets/img/youtube.png"
+        /></a>
+      </div>
+      <p class="copyright">© SAFFY KimEunJae_HongJeongHoon</p>
+    </footer>
+
+    <script>
+      function validateNickname() {
+        const nicknameInput = document.getElementById("nickname");
+        const nickname = nicknameInput.value.trim();
+
+        // 닉네임이 비어있으면
+        if (nickname === "") {
+          nicknameInput.style.border = "2px solid red"; // 빨간 테두리 추가
+          return false;
+        }
+
+        // 닉네임을 localStorage에 저장
+        localStorage.setItem("user", nickname);
+
+        // 닉네임이 비어있지 않으면 마이페이지로 이동
+        window.location.href = "마이페이지.html";
+        return true;
+      }
+    </script>
+  </body>
+</html>

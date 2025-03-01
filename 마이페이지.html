@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>마이 페이지</title>
+    <link rel="stylesheet" href="/assets/css/myPage.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 헤더 -->
+      <div class="header">
+        <div class="logo">
+          <a href="main.html">
+            <img src="/assets/img/logo.png" alt="로고" />
+          </a>
+        </div>
+        <div class="nav">
+          <a href="main.html">지역 별 관광정보</a>
+          <a href="main.html">나의 여행 계획</a>
+          <a href="마이페이지.html">마이페이지</a>
+          <a href="로그인.html" class="button">로그아웃</a>
+        </div>
+      </div>
+
+      <div class="main-container">
+        <!-- 프로필 섹션 -->
+        <div class="profile">
+          <div class="profile-img">
+            <img src="/assets/img/profile-avatar.png" alt="프로필 이미지" />
+          </div>
+          <div class="profile-info">
+            <h2 id="welcome-message">ssafy님 안녕하세요!</h2>
+            <!-- 아이디 표시 영역에 id 추가 -->
+            <p>가입일: 25.02.28</p>
+            <div class="btn-container">
+              <!-- 자바스크립트로 페이지 이동 -->
+              <button class="edit-btn" onclick="goToNicknameChange()">
+                개인정보 수정
+              </button>
+              <button class="logout-btn" onclick="openModal()">탈퇴하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 여행 계획 섹션 -->
+        <div class="travel-plan">
+          <button class="add-btn">+</button>
+          <div class="plan-box">
+            <h3>나의 여행 계획</h3>
+            <p>계획이 없습니다..</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 모달 -->
+      <div id="modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation();">
+          <p class="modal-title">정말 탈퇴하시겠습니까?</p>
+          <p class="modal-text">
+            탈퇴 시 생성한 여행 계획과 찜 목록이 삭제되며 복구할 수 없습니다.
+          </p>
+          <div class="modal-buttons">
+            <button class="cancel-btn" onclick="closeModal()">취소</button>
+            <button class="confirm-btn" onclick="closeModal()">확인</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 푸터 -->
+      <div class="footer">
+        <div class="social-icons">
+          <a href="https://edu.ssafy.com/edu/main/index.do"
+            ><img src="/assets/img/x.png"
+          /></a>
+          <a href="https://edu.ssafy.com/edu/main/index.do"
+            ><img src="/assets/img/youtube.png"
+          /></a>
+        </div>
+        <p class="copyright">© SAFFY KimEunJae_HongJeongHoon</p>
+      </div>
+    </div>
+
+    <script>
+      // 페이지가 로드되면 localStorage에서 user 값을 가져와서 "ssafy"를 동적으로 업데이트
+      window.onload = function () {
+        const username = localStorage.getItem("user"); // localStorage에서 저장된 'user' 값을 가져옴
+        if (username) {
+          document.getElementById(
+            "welcome-message"
+          ).textContent = `${username}님 안녕하세요!`; // 텍스트를 동적으로 업데이트
+        }
+      };
+
+      // 개인정보 수정 페이지로 이동
+      function goToNicknameChange() {
+        window.location.href = "닉네임변경.html";
+      }
+
+      // 모달 열기
+      function openModal() {
+        document.getElementById("modal").style.display = "flex";
+      }
+
+      // 모달 닫기
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

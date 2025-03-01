@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비밀번호 찾기_변경</title>
+    <link rel="stylesheet" href="/assets/css/findPassword.css" />
+    <script>
+      function validatePassword() {
+        const newPassword = document.querySelector(
+          'input[placeholder="새로운 비밀번호"]'
+        );
+        const confirmPassword = document.querySelector(
+          'input[placeholder="비밀번호 확인"]'
+        );
+        const submitButton = document.querySelector("button");
+
+        // 초기화: 모든 스타일을 제거
+        newPassword.style.border = "";
+        confirmPassword.style.border = "";
+
+        // 조건 체크
+        if (newPassword.value === "" || confirmPassword.value === "") {
+          // 비밀번호 필드가 비어 있으면 빨간 테두리
+          if (newPassword.value === "")
+            newPassword.style.border = "2px solid red";
+          if (confirmPassword.value === "")
+            confirmPassword.style.border = "2px solid red";
+          alert("비밀번호를 입력해주세요.");
+          return false;
+        }
+
+        if (newPassword.value !== confirmPassword.value) {
+          // 비밀번호가 일치하지 않으면 빨간 테두리
+          newPassword.style.border = "2px solid red";
+          confirmPassword.style.border = "2px solid red";
+          alert("비밀번호가 일치하지 않습니다.");
+          return false;
+        }
+
+        // 조건이 맞으면 로그인 페이지로 이동
+        window.location.href = "로그인.html";
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 헤더 -->
+      <header class="header">
+        <div class="logo">
+          <a href="main.html">
+            <img src="/assets/img/logo.png" alt="로고" />
+          </a>
+        </div>
+      </header>
+
+      <!-- 비밀번호 변경 폼 -->
+      <div class="content">
+        <div class="form-box">
+          <h3>새로운 비밀번호</h3>
+          <input type="password" placeholder="새로운 비밀번호" />
+          <h3>비밀번호 확인</h3>
+          <input type="password" placeholder="비밀번호 확인" />
+          <button onclick="return validatePassword()">완료</button>
+        </div>
+      </div>
+
+      <!-- 푸터 -->
+      <div class="footer">
+        <div class="social-icons">
+          <a href="https://edu.ssafy.com/edu/main/index.do">
+            <img src="/assets/img/x.png" />
+          </a>
+          <a href="https://edu.ssafy.com/edu/main/index.do">
+            <img src="/assets/img/youtube.png" />
+          </a>
+        </div>
+        <p class="copyright">© SAFFY KimEunJae_HongJeongHoon</p>
+      </div>
+    </div>
+  </body>
+</html>

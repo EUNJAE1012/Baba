@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비밀번호찾기</title>
+    <link rel="stylesheet" href="/assets/css/findPassword.css" />
+    <script>
+      function validateForm() {
+        const idInput = document.querySelector('input[type="id"]');
+        const emailInput = document.querySelector('input[type="email"]');
+        const emailError = document.getElementById("email-error");
+        const sendButton = document.querySelector("button");
+        const sendBox = document.getElementById("send-box");
+        const verifyBox = document.getElementById("verify-box");
+
+        let isValid = true;
+
+        // 아이디 비어있는지 체크
+        if (idInput.value.trim() === "") {
+          idInput.style.border = "2px solid red";
+          isValid = false;
+        } else {
+          idInput.style.border = "";
+        }
+
+        // 이메일 형식 체크
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(emailInput.value)) {
+          emailError.textContent = "올바른 이메일 형식을 입력하세요.";
+          isValid = false;
+        } else {
+          emailError.textContent = "";
+        }
+
+        // 아이디와 이메일이 모두 유효한 경우
+        if (isValid) {
+          idInput.disabled = true;
+          emailInput.disabled = true;
+          idInput.style.backgroundColor = "#f0f0f0"; // 아이디 입력 박스 회색으로 변경
+          emailInput.style.backgroundColor = "#f0f0f0"; // 이메일 입력 박스 회색으로 변경
+          sendButton.textContent = "완료";
+          sendButton.removeEventListener("click", validateForm);
+          sendButton.addEventListener("click", showVerifyBox);
+
+          // 인증번호 전송 버튼 숨기기
+          sendBox.style.display = "none";
+
+          // 인증번호 입력 박스 표시
+          verifyBox.style.display = "block";
+        }
+
+        return isValid;
+      }
+
+      function showVerifyBox() {
+        // 인증번호 전송 후, 인증번호 입력 박스가 나타남
+        const verifyBox = document.getElementById("verify-box");
+        verifyBox.style.display = "block"; // 추가된 부분
+      }
+
+      function verifyCode() {
+        const codeInput = document.getElementById("verification-code");
+        if (codeInput.value.trim() === "123456") {
+          window.location.href = "비밀번호찾기_변경.html";
+        } else {
+          alert("인증번호가 잘못되었습니다.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 헤더 -->
+      <div class="header">
+        <div class="logo">
+          <a href="main.html">
+            <img src="/assets/img/logo.png" alt="로고" />
+          </a>
+        </div>
+      </div>
+
+      <!-- 비밀번호 변경 폼 -->
+      <div class="content">
+        <div class="form-box">
+          <h3>아이디</h3>
+          <input type="id" placeholder="아이디" />
+          <h3>이메일</h3>
+          <input type="email" placeholder="이메일" />
+          <p id="email-error" style="color: red"></p>
+
+          <!-- 인증번호 전송 버튼을 감싸는 박스 -->
+          <div id="send-box">
+            <button onclick="validateForm()">인증번호 전송</button>
+          </div>
+
+          <!-- 인증번호 입력 박스 -->
+          <div id="verify-box" style="display: none">
+            <h3>인증번호</h3>
+            <input type="text" id="verification-code" placeholder="인증번호" />
+            <button onclick="verifyCode()">확인</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 푸터 -->
+      <div class="footer">
+        <div class="social-icons">
+          <a href="https://edu.ssafy.com/edu/main/index.do"
+            ><img src="/assets/img/x.png"
+          /></a>
+          <a href="https://edu.ssafy.com/edu/main/index.do"
+            ><img src="/assets/img/youtube.png"
+          /></a>
+        </div>
+        <p class="copyright">© SAFFY KimEunJae_HongJeongHoon</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>상세 정보</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      h2 {
+        margin-bottom: 10px;
+      }
+      .info {
+        margin-bottom: 20px;
+      }
+      .button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+      .image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="place-name"></h2>
+    <!-- 이미지 표시 -->
+    <img id="place-image" class="image" src="" alt="상세 이미지" />
+    <div class="info">
+      <p><strong>주소:</strong> <span id="place-address"></span></p>
+      <p><strong>전화번호:</strong> <span id="place-tel"></span></p>
+      <p><strong>소개:</strong> <span id="place-description"></span></p>
+    </div>
+    <button class="button" id="hotspot-btn">핫플로 추천</button>
+    <button class="button" id="add-plan-btn">내 여행 계획 목록에 추가</button>
+
+    <script>
+      window.addEventListener("load", function () {
+        // URL 매개변수에서 정보 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has("label")) {
+          // URL 매개변수에서 데이터 추출
+          const label = urlParams.get("label");
+          const address = urlParams.get("address");
+          const tel = urlParams.get("tel");
+          const imageUrl = urlParams.get("imageUrl");
+
+          // 화면에 정보 표시
+          document.getElementById("place-name").textContent = label;
+          document.getElementById("place-address").textContent = address;
+          document.getElementById("place-tel").textContent = tel;
+          document.getElementById("place-image").src = imageUrl;
+
+          // "핫플로 추천" 버튼 클릭 시 이벤트
+          document.getElementById("hotspot-btn").addEventListener("click", function () {
+            alert(`💡 핫플로 추천: ${label}`);
+          });
+
+          // "나의 여행 계획에 추가" 버튼 클릭 시, 여행 계획 목록에 추가
+          document.getElementById("add-plan-btn").addEventListener("click", function () {
+            if (window.opener) {
+              const planList = window.opener.document.querySelector(".plan-items");
+              if (planList) {
+                // "계획이 없습니다" 텍스트가 있을 경우 제거
+                const noPlanText = window.opener.document.querySelector(".no-plan-text");
+                if (noPlanText) {
+                  noPlanText.remove(); // 기존 텍스트 삭제
+                }
+                const planCard = document.createElement("div");
+                planCard.classList.add("plan-card");
+                let category = "myTrip";
+                planCard.innerHTML = `
+                  <img src="${imageUrl}" alt="${label}" class="location-img" />
+                  <h3>${category} - ${label}</h3>
+                  <p>${address}</p>
+                  <p>${tel}</p>
+                `;
+                planList.appendChild(planCard);
+                window.close(); // 자식 창 닫기
+              } else {
+                alert("부모 창에서 계획 목록 요소(.plan-items)를 찾을 수 없습니다.");
+              }
+            } else {
+              alert("부모 창을 찾을 수 없습니다.");
+            }
+          });
+        } else if (window.opener && window.opener.info) {
+          // 기존 방식의 info 객체 처리 (이전 방식과의 호환성 유지)
+          const info = window.opener.info;
+
+          document.getElementById("place-name").textContent = info.label;
+          document.getElementById("place-address").textContent = info.address;
+          document.getElementById("place-tel").textContent = info.tel;
+          document.getElementById("place-image").src = info.imageUrl;
+
+          // 버튼 이벤트 핸들러 등록
+          document.getElementById("hotspot-btn").addEventListener("click", function () {
+            alert(`💡 핫플로 추천: ${info.label}`);
+          });
+
+          document.getElementById("add-plan-btn").addEventListener("click", function () {
+            const planList = window.opener.document.querySelector(".plan-items");
+            if (planList) {
+              const planItem = document.createElement("div");
+              planItem.textContent = info.label;
+              planList.appendChild(planItem);
+              window.close();
+            } else {
+              alert("부모 창에서 계획 목록 요소를 찾을 수 없습니다.");
+            }
+          });
+        } else {
+          alert("상세 정보가 전달되지 않았습니다.");
+        }
+      });
+    </script>
+  </body>
+</html>
